@@ -12,31 +12,30 @@ import com.less.haku.hcomic.common.BaseActivity;
 import com.less.haku.hcomic.data.Hitokoto;
 import com.less.haku.hcomic.request.HitokotoRequest;
 import com.less.haku.hcomic.request.base.HOkHttpClient;
+import com.less.haku.hcomic.widget.ComicPage;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
-    private TextView hitoText;
-    private TextView sourceText;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.main_hito_text)
+    TextView hitoText;
+    @Bind(R.id.main_hito_source)
+    TextView sourceText;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
+    @Bind(R.id.maiin_comic_page)
+    ComicPage maiinComicPage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initViews();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requestHitokoto();
-            }
-        });
-    }
-
-    public void initViews() {
-        hitoText = (TextView) this.findViewById(R.id.main_hito_text);
-        sourceText = (TextView) this.findViewById(R.id.main_hito_source);
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -61,6 +60,12 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @OnClick(R.id.maiin_comic_page)
+    public void refresh(View view) {
+        maiinComicPage.refresh();
+    }
+
+    @OnClick({R.id.main_hito_text, R.id.fab})
     public void requestHitokoto() {
 
         final HitokotoRequest hitokotoRequest = new HitokotoRequest();
@@ -74,7 +79,7 @@ public class MainActivity extends BaseActivity {
                     return;
                 }
                 hitoText.setText(response.hitokoto);
-                sourceText.setText(response.source);
+                sourceText.setText("----" + response.source);
             }
 
             @Override

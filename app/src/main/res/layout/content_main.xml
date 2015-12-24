@@ -21,9 +21,16 @@
 
     <TextView
         android:id="@+id/main_hito_source"
+        android:layout_marginTop="20dp"
         android:gravity="right"
         android:layout_below="@+id/main_hito_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Source" />
+
+    <com.less.haku.hcomic.widget.ComicPage
+        android:id="@+id/maiin_comic_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 </RelativeLayout>
