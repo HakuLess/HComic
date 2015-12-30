@@ -26,11 +26,17 @@
         android:layout_below="@+id/main_hito_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Source" />
+        tools:text="--Source" />
 
     <com.less.haku.hcomic.widget.ComicPage
-        android:id="@+id/maiin_comic_page"
+        android:id="@+id/main_comic_page"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true" />
+
+    <com.less.haku.hcomic.widget.CustomView
+        android:id="@+id/main_custom_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

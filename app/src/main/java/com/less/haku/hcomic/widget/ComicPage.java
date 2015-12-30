@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -29,32 +28,32 @@ public class ComicPage extends View {
 //        refresh();
     }
 
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//        setMeasuredDimension(measure(widthMeasureSpec), measure(heightMeasureSpec));
-//    }
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(measure(widthMeasureSpec), measure(heightMeasureSpec));
+    }
 
-    private int measure(int heightMeasureSpec) {
+    private int measure(int measureSpec) {
         String Tag = "measure";
         int result = 0; //结果
-        int specMode=MeasureSpec.getMode(heightMeasureSpec);
-        int specSize=MeasureSpec.getSize(heightMeasureSpec);
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
         switch (specMode) {
             case MeasureSpec.AT_MOST:  // 子容器可以是声明大小内的任意大小
-                Log.e(Tag, "子容器可以是声明大小内的任意大小");
-                Log.e(Tag, "大小为:"+specSize);
-                result=specSize;
+//                Log.e(Tag, "子容器可以是声明大小内的任意大小");
+//                Log.e(Tag, "大小为:" + specSize);
+                result = specSize;
                 break;
             case MeasureSpec.EXACTLY: //父容器已经为子容器设置了尺寸,子容器应当服从这些边界,不论子容器想要多大的空间.  比如EditTextView中的DrawLeft
-                Log.e(Tag, "父容器已经为子容器设置了尺寸,子容器应当服从这些边界,不论子容器想要多大的空间");
-                Log.e(Tag, "大小为:"+specSize);
-                result=specSize;
+//                Log.e(Tag, "父容器已经为子容器设置了尺寸,子容器应当服从这些边界,不论子容器想要多大的空间");
+//                Log.e(Tag, "大小为:" + specSize);
+                result = specSize;
                 break;
             case MeasureSpec.UNSPECIFIED:  //父容器对于子容器没有任何限制,子容器想要多大就多大. 所以完全取决于子view的大小
-                Log.e(Tag, "父容器对于子容器没有任何限制,子容器想要多大就多大");
-                Log.e(Tag, "大小为:"+specSize);
-                result=1500;
+//                Log.e(Tag, "父容器对于子容器没有任何限制,子容器想要多大就多大");
+//                Log.e(Tag, "大小为:" + specSize);
+                result = 1500;
                 break;
             default:
                 break;
@@ -65,7 +64,6 @@ public class ComicPage extends View {
     public void refresh() {
         radius = 200 + (int)(Math.random() * 100);
         invalidate();
-        Log.e("refresh", "refresh");
     }
 
 }

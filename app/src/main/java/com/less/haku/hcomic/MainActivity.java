@@ -10,13 +10,20 @@ import android.widget.TextView;
 
 import com.less.haku.hcomic.common.BaseActivity;
 import com.less.haku.hcomic.data.Hitokoto;
+import com.less.haku.hcomic.network.HitokotoService;
 import com.less.haku.hcomic.request.HitokotoRequest;
 import com.less.haku.hcomic.request.base.HOkHttpClient;
 import com.less.haku.hcomic.widget.ComicPage;
+import com.less.haku.hcomic.widget.CustomView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class MainActivity extends BaseActivity {
 
@@ -28,14 +35,27 @@ public class MainActivity extends BaseActivity {
     TextView sourceText;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.maiin_comic_page)
-    ComicPage maiinComicPage;
+    @Bind(R.id.main_comic_page)
+    ComicPage mainComicPage;
+    @Bind(R.id.main_custom_view)
+    CustomView customView;
+
+    private HitokotoService hitokotoService;
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+//        CustomView customView = (CustomView) this.findViewById(R.id.main_custom_view);
+
+//        super.onCreate(savedInstanceState);
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.hitokoto.us")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     @Override
@@ -60,12 +80,36 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.maiin_comic_page)
+    @OnClick(R.id.main_comic_page)
     public void refresh(View view) {
-        maiinComicPage.refresh();
+        mainComicPage.refresh();
     }
 
     @OnClick({R.id.main_hito_text, R.id.fab})
+    public void requestHitokotoByRetrofit() {
+        hitokotoService = retrofit.create(HitokotoService.class);
+
+        Call<Hitokoto> call = hitokotoService.getHitokoto();
+        call.enqueue(new Callback<Hitokoto>() {
+            @Override
+            public void onResponse(Response<Hitokoto> response) {
+                hitoText.setText(response.body().hitokoto);
+                sourceText.setText("----" + response.body().source);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     public void requestHitokoto() {
 
         final HitokotoRequest hitokotoRequest = new HitokotoRequest();
