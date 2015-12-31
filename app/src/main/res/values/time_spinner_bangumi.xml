@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="yearBangumi">
+        <item>2013</item>
+        <item>2014</item>
+        <item>2015</item>
+        <item>2016</item>
+    </string-array>
+
+    <string-array name="monthBangumi">
+        <item>1</item>
+        <item>4</item>
+        <item>7</item>
+        <item>10</item>
+    </string-array>
+</resources>

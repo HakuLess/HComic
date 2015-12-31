@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
+import com.less.haku.hcomic.core.fragment.BanGumiFragment;
 import com.less.haku.hcomic.core.fragment.HitoKotoFragment;
 
 /**
@@ -18,14 +20,26 @@ public class HitoFragmentAdapter extends FragmentPagerAdapter {
         super(fm);
         this.context = context;
     }
+
     @Override
     public Fragment getItem(int position) {
-        return HitoKotoFragment.newInstance(position + 1);
+        Log.d("sdggsdg", position + " pos");
+        switch (position) {
+            case 0 :
+                return HitoKotoFragment.newInstance();
+            case 1 :
+                return BanGumiFragment.newInstance();
+            case 2 :
+                return HitoKotoFragment.newInstance();
+        }
+        return null;
     }
+
     @Override
     public int getCount() {
         return COUNT;
     }
+
     @Override
     public CharSequence getPageTitle(int position) {
         return titles[position];

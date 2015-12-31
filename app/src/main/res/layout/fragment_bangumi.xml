@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Spinner
+            android:id="@+id/frag_ban_year"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/yearBangumi"/>
+        <Spinner
+            android:id="@+id/frag_ban_month"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/monthBangumi"/>
+        <Button
+            android:id="@+id/frag_ban_search"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="查询"/>
+    </LinearLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/frag_ban_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/frag_ban_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

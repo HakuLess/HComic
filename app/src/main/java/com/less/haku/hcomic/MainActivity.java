@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.less.haku.hcomic.common.BaseActivity;
 import com.less.haku.hcomic.data.Hitokoto;
 import com.less.haku.hcomic.network.HitokotoService;
+import com.less.haku.hcomic.network.base.RetrofitSigleton;
 import com.less.haku.hcomic.request.HitokotoRequest;
 import com.less.haku.hcomic.request.base.HOkHttpClient;
 import com.less.haku.hcomic.widget.ComicPage;
@@ -21,9 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit.Call;
 import retrofit.Callback;
-import retrofit.GsonConverterFactory;
 import retrofit.Response;
-import retrofit.Retrofit;
 
 public class MainActivity extends BaseActivity {
 
@@ -41,7 +40,6 @@ public class MainActivity extends BaseActivity {
     CustomView customView;
 
     private HitokotoService hitokotoService;
-    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +47,6 @@ public class MainActivity extends BaseActivity {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//        CustomView customView = (CustomView) this.findViewById(R.id.main_custom_view);
-
-//        super.onCreate(savedInstanceState);
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.hitokoto.us")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
     }
 
     @Override
@@ -87,7 +78,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick({R.id.main_hito_text, R.id.fab})
     public void requestHitokotoByRetrofit() {
-        hitokotoService = retrofit.create(HitokotoService.class);
+        hitokotoService = RetrofitSigleton.getSingleton().create(HitokotoService.class);
 
         Call<Hitokoto> call = hitokotoService.getHitokoto();
         call.enqueue(new Callback<Hitokoto>() {
