@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 
 import com.less.haku.hcomic.R;
 import com.less.haku.hcomic.common.BaseActivity;
-import com.less.haku.hcomic.core.adapter.HitoFragmentAdapter;
+import com.less.haku.hcomic.core.adapter.HomeFragmentAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,7 +37,7 @@ public class HomeActivity extends BaseActivity {
 //        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         //填充Adapter
-        HitoFragmentAdapter adapter = new HitoFragmentAdapter(getSupportFragmentManager(), this);
+        HomeFragmentAdapter adapter = new HomeFragmentAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(0);
 

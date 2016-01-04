@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.less.haku.hcomic.R;
 import com.less.haku.hcomic.core.holder.BangumiViewHolder;
 import com.less.haku.hcomic.data.Bangumi;
@@ -15,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by HaKu on 15/12/31.
+ * 新番fragment页RecyclerViewaAdapter
  */
 public class BangumiAdapter extends RecyclerView.Adapter {
     private Context context;
@@ -39,9 +39,10 @@ public class BangumiAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof BangumiViewHolder) {
             ((BangumiViewHolder) holder).bangumiTitle.setText(bangumiList.get(position).title);
-            Glide.with(context).load(bangumiList.get(position).cover)
-                    .into(((BangumiViewHolder) holder).bangumiCover);
-//            ((BangumiViewHolder) holder).bangumiCover.setUrl(bangumiList.get(position).cover);
+
+//            Glide.with(context).load(bangumiList.get(position).cover)
+//                    .into(((BangumiViewHolder) holder).bangumiCover);
+            ((BangumiViewHolder) holder).bangumiCover.setUrl(bangumiList.get(position).cover);
         }
     }
 

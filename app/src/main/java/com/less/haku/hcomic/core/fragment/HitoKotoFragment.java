@@ -2,13 +2,13 @@ package com.less.haku.hcomic.core.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.less.haku.hcomic.R;
+import com.less.haku.hcomic.common.BaseFragment;
 import com.less.haku.hcomic.data.Hitokoto;
 import com.less.haku.hcomic.network.HitokotoService;
 import com.less.haku.hcomic.network.base.RetrofitSigleton;
@@ -23,7 +23,7 @@ import retrofit.Response;
  * Created by HaKu on 15/12/30.
  * 一言fragment
  */
-public class HitoKotoFragment extends Fragment {
+public class HitoKotoFragment extends BaseFragment {
 
     @Bind(R.id.frag_hito_text)
     TextView hitoText;
@@ -63,9 +63,13 @@ public class HitoKotoFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void initServices() {
+        hitokotoService = RetrofitSigleton.getSingleton().create(HitokotoService.class);
+    }
+
     //请求一言
     public void requestHitokotoByRetrofit() {
-        hitokotoService = RetrofitSigleton.getSingleton().create(HitokotoService.class);
 
         Call<Hitokoto> call = hitokotoService.getHitokoto();
         call.enqueue(new Callback<Hitokoto>() {

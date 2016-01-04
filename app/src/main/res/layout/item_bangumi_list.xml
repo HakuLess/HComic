@@ -4,11 +4,10 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
+    <com.less.haku.hcomic.widget.HImageView
         android:id="@+id/item_bangumi_cover"
         android:layout_width="100dp"
-        android:layout_height="100dp"
-        tools:src="@drawable/lost"/>
+        android:layout_height="100dp"/>
     <TextView
         android:id="@+id/item_bangumi_title"
         android:layout_width="wrap_content"

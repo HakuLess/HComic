@@ -1,5 +1,15 @@
 package com.less.haku.hcomic.network.base;
 
+import android.util.Log;
+
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.ResponseBody;
+import com.squareup.okhttp.logging.HttpLoggingInterceptor;
+
+import java.io.IOException;
+
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 
@@ -9,7 +19,11 @@ import retrofit.Retrofit;
  */
 
 public class RetrofitSigleton {
-    private RetrofitSigleton (){}
+    private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+    private RetrofitSigleton (){
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+    }
+
     private volatile static Retrofit retrofit;
     //返回一言API
     public static Retrofit getSingleton() {
@@ -23,6 +37,8 @@ public class RetrofitSigleton {
                 }
             }
         }
+
+        retrofit.client().interceptors().add(new LoggingInterceptor());
         return retrofit;
     }
 
@@ -55,6 +71,63 @@ public class RetrofitSigleton {
                 }
             }
         }
+        bilibiliRetrofit.client().interceptors().add(new LoggingInterceptor());
         return bilibiliRetrofit;
+    }
+
+    private volatile static Retrofit marvelRetrofit;
+    //返回B站API
+    public static Retrofit getMarvel() {
+        if (marvelRetrofit == null) {
+            synchronized (Retrofit.class) {
+                if (marvelRetrofit == null) {
+                    marvelRetrofit = new Retrofit.Builder()
+                            .baseUrl("http://gateway.marvel.com/v1/public/")
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                }
+            }
+        }
+//        marvelRetrofit.client().interceptors().add(new LoggingInterceptor());
+        return marvelRetrofit;
+    }
+
+
+    static class LoggingInterceptor implements Interceptor {
+        @Override
+        public Response intercept(Interceptor.Chain chain) throws IOException {
+            Request request = chain.request();
+
+            long t1 = System.nanoTime();
+
+            //可以添加公共参数 增加校验签名等
+            request = request.newBuilder().addHeader("123", "123").build();
+            Log.d("retrofit request", request.url().toString());
+//            Logger.d(String.format("Sending request %s on %s%n%s",
+//                    request.url(), chain.connection(), request.headers()));
+
+            Response response = chain.proceed(request);
+
+            long t2 = System.nanoTime();
+//            Log.d("retrofit response",
+//                    "request time " + (t2 - t1) + "\n" +
+//                            "request url "+ response.request().url().toString() + "\n" +
+//                            "response body " + response.body().string());
+            String bodyString = response.body().string();
+            Log.d("retrofit response",
+                    "request time " + (t2 - t1) / 1e6d + "ms\n" +
+                            "request url " + response.request().url().toString() + "\n"
+                            + "response body " + bodyString
+            );
+
+//            Logger.d(String.format("Received response for %s in %.1fms%n%s",
+//                    response.request().url(), (t2 - t1) / 1e6d, response.headers()));
+
+            // Logger.d(""+new String(response.body().bytes()));
+
+            return response.newBuilder()
+                    .body(ResponseBody.create(response.body().contentType(), bodyString))
+                    .build();
+        }
     }
 }

@@ -2,7 +2,6 @@ package com.less.haku.hcomic.core.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.less.haku.hcomic.R;
+import com.less.haku.hcomic.common.BaseFragment;
 import com.less.haku.hcomic.core.adapter.BangumiAdapter;
 import com.less.haku.hcomic.data.Bangumi;
 import com.less.haku.hcomic.network.BangumiService;
@@ -31,7 +31,7 @@ import retrofit.Response;
  * Created by HaKu on 15/12/31.
  * 新番Fragment
  */
-public class BanGumiFragment extends Fragment {
+public class BanGumiFragment extends BaseFragment {
 
     @Bind(R.id.frag_ban_list)
     RecyclerView banReyclerView;
@@ -95,6 +95,11 @@ public class BanGumiFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void initServices() {
+        bangumiService = RetrofitSigleton.getBiliBili().create(BangumiService.class);
+    }
+
     @OnClick(R.id.frag_ban_search)
     public void search(View view) {
         month = fragBanMonth.getSelectedItem().toString();
@@ -104,7 +109,7 @@ public class BanGumiFragment extends Fragment {
 
     //请求新番
     public void requestBangumiByRetrofit(String year, String month) {
-        bangumiService = RetrofitSigleton.getBiliBili().create(BangumiService.class);
+//        bangumiService = RetrofitSigleton.getBiliBili().create(BangumiService.class);
 
         Call<List<Bangumi>> call = bangumiService.getBangumi(year, month);
         call.enqueue(new Callback<List<Bangumi>>() {

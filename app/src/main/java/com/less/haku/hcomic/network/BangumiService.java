@@ -10,6 +10,7 @@ import retrofit.http.Path;
 
 /**
  * Created by HaKu on 15/12/31.
+ * 新番请求
  */
 public interface BangumiService {
     @GET("/index/bangumi/{year}-{month}.json")
