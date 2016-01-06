@@ -1,6 +1,5 @@
 package com.less.haku.hcomic.common;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -22,6 +21,8 @@ import com.less.haku.hcomic.request.base.HOkHttpClient;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * Created by HaKu on 15/11/6.
  * 当前应用中所有的Activity都应该继承此类或此类的子类，
@@ -33,10 +34,12 @@ public class BaseActivity extends AppCompatActivity {
     //持有当前json请求，activity销毁时，遍历并cancel掉所有请求
     protected ArrayList<WeakReference<BaseRequest>> listJsonRequest;
 
+    protected CompositeSubscription compositeSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        compositeSubscription = new CompositeSubscription();
         Log.v("Activity : ", "Start Activity: " + this.getClass().getName());
     }
 
@@ -52,6 +55,8 @@ public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        compositeSubscription.unsubscribe();
+
         isDestoryed = true;
         Log.v("Activity : ", this.getClass().getName());
         if (listJsonRequest != null) { //遍历取消所有请求
@@ -179,40 +184,5 @@ public class BaseActivity extends AppCompatActivity {
             managedDialogId = 0;
             managedDialog = null;
         }
-    }
-
-    /**
-     * 显示一个需要二次确认的对话框
-     * @param listener
-     */
-    protected void showEnsureAlert(String title, String message, String btnTitleEnsure, String btnTitleCancel, final EnsureListener listener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        if (!TextUtils.isEmpty(title)) {
-            builder.setTitle(title);
-        }
-        if (!TextUtils.isEmpty(message)) {
-            builder.setMessage(message);
-        }
-
-        builder.setPositiveButton(TextUtils.isEmpty(btnTitleEnsure) ? "确认" : btnTitleEnsure, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (listener != null) {
-                    listener.ensure();
-                }
-            }
-        });
-
-        if (!TextUtils.isEmpty(btnTitleCancel)) {
-            builder.setNegativeButton(TextUtils.isEmpty(btnTitleCancel) ? "取消" : btnTitleCancel, null);
-        }
-        AlertDialog dialog = builder.create();
-//        dialog.setCancelable(true);
-        dialog.show();
-    }
-
-    public interface EnsureListener {
-        void ensure();
     }
 }

@@ -42,20 +42,21 @@ public class RetrofitSigleton {
         return retrofit;
     }
 
-    private volatile static Retrofit apiBilibiliRetrofit;
+    private volatile static Retrofit appBilibiliRetrofit;
     //返回B站API
-    public static Retrofit getApiBiliBili() {
-        if (apiBilibiliRetrofit == null) {
+    public static Retrofit getAppBiliBili() {
+        if (appBilibiliRetrofit == null) {
             synchronized (Retrofit.class) {
-                if (apiBilibiliRetrofit == null) {
-                    apiBilibiliRetrofit = new Retrofit.Builder()
-                            .baseUrl("http://api.bilibili.cn")
+                if (appBilibiliRetrofit == null) {
+                    appBilibiliRetrofit = new Retrofit.Builder()
+                            .baseUrl("http://app.bilibili.com/")
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
                 }
             }
         }
-        return apiBilibiliRetrofit;
+        appBilibiliRetrofit.client().interceptors().add(new LoggingInterceptor());
+        return appBilibiliRetrofit;
     }
 
     private volatile static Retrofit bilibiliRetrofit;
@@ -75,23 +76,6 @@ public class RetrofitSigleton {
         return bilibiliRetrofit;
     }
 
-    private volatile static Retrofit marvelRetrofit;
-    //返回B站API
-    public static Retrofit getMarvel() {
-        if (marvelRetrofit == null) {
-            synchronized (Retrofit.class) {
-                if (marvelRetrofit == null) {
-                    marvelRetrofit = new Retrofit.Builder()
-                            .baseUrl("http://gateway.marvel.com/v1/public/")
-                            .addConverterFactory(GsonConverterFactory.create())
-                            .build();
-                }
-            }
-        }
-//        marvelRetrofit.client().interceptors().add(new LoggingInterceptor());
-        return marvelRetrofit;
-    }
-
 
     static class LoggingInterceptor implements Interceptor {
         @Override
@@ -101,29 +85,18 @@ public class RetrofitSigleton {
             long t1 = System.nanoTime();
 
             //可以添加公共参数 增加校验签名等
-            request = request.newBuilder().addHeader("123", "123").build();
+//            request = request.newBuilder().addHeader("header", "header").build();
             Log.d("retrofit request", request.url().toString());
-//            Logger.d(String.format("Sending request %s on %s%n%s",
-//                    request.url(), chain.connection(), request.headers()));
 
             Response response = chain.proceed(request);
 
             long t2 = System.nanoTime();
-//            Log.d("retrofit response",
-//                    "request time " + (t2 - t1) + "\n" +
-//                            "request url "+ response.request().url().toString() + "\n" +
-//                            "response body " + response.body().string());
             String bodyString = response.body().string();
             Log.d("retrofit response",
                     "request time " + (t2 - t1) / 1e6d + "ms\n" +
                             "request url " + response.request().url().toString() + "\n"
                             + "response body " + bodyString
             );
-
-//            Logger.d(String.format("Received response for %s in %.1fms%n%s",
-//                    response.request().url(), (t2 - t1) / 1e6d, response.headers()));
-
-            // Logger.d(""+new String(response.body().bytes()));
 
             return response.newBuilder()
                     .body(ResponseBody.create(response.body().contentType(), bodyString))

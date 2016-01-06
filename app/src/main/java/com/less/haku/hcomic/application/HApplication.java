@@ -1,6 +1,9 @@
 package com.less.haku.hcomic.application;
 
 import android.app.Application;
+import android.util.Log;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 /**
  * Created by HaKu on 15/12/22.
@@ -19,5 +22,12 @@ public class HApplication extends Application {
 
     public HApplication() {
         _instance = this;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.d("init", "初始化应用");
+        Fresco.initialize(this);
     }
 }

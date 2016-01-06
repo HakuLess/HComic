@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.less.haku.hcomic.core.fragment.BanGumiFragment;
+import com.less.haku.hcomic.core.fragment.BiliBiliFragment;
 import com.less.haku.hcomic.core.fragment.HitoKotoFragment;
-import com.less.haku.hcomic.core.fragment.MarvelFragment;
 
 /**
  * Created by HaKu on 15/12/30.
@@ -30,7 +30,7 @@ public class HomeFragmentAdapter extends FragmentPagerAdapter {
             case 1 :
                 return BanGumiFragment.newInstance();
             case 2 :
-                return MarvelFragment.newInstance();
+                return BiliBiliFragment.newInstance();
         }
         return null;
     }

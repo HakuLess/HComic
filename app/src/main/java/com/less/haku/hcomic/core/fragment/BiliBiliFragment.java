@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.less.haku.hcomic.R;
 import com.less.haku.hcomic.common.BaseFragment;
-import com.less.haku.hcomic.data.MarvelResponse;
-import com.less.haku.hcomic.network.MarvelService;
+import com.less.haku.hcomic.data.TidRecommend;
+import com.less.haku.hcomic.network.AppBiliBiliService;
 import com.less.haku.hcomic.network.base.RetrofitSigleton;
 
 import butterknife.Bind;
@@ -20,25 +20,21 @@ import retrofit.Callback;
 import retrofit.Response;
 
 /**
- * Created by HaKu on 16/1/4.
+ * Created by HaKu on 16/1/5.
  */
-public class MarvelFragment extends BaseFragment {
+public class BiliBiliFragment extends BaseFragment {
 
     @Bind(R.id.frag_hito_text)
-    TextView hitoText;
+    TextView fragHitoText;
     @Bind(R.id.frag_hito_source)
-    TextView sourceText;
-    private MarvelService marvelService;
-
-    public static MarvelFragment newInstance() {
-        MarvelFragment fragment = new MarvelFragment();
-        return fragment;
-    }
+    TextView fragHitoSource;
+    private AppBiliBiliService appBiliBiliService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 
     private View rootView;
 
@@ -48,8 +44,8 @@ public class MarvelFragment extends BaseFragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_hitokoto, container, false);
             ButterKnife.bind(this, rootView);
-            //请求Marvel API
-            requestMarvel();
+            //请求APP BiliBili API
+
         }
 
         //缓存的rootView需要判断是否已经被加过parent， 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
@@ -59,38 +55,35 @@ public class MarvelFragment extends BaseFragment {
         }
 
         ButterKnife.bind(this, rootView);
+        requestRecommend();
         return rootView;
     }
 
     @Override
     public void initServices() {
-        marvelService = RetrofitSigleton.getMarvel().create(MarvelService.class);
+        appBiliBiliService = RetrofitSigleton.getAppBiliBili().create(AppBiliBiliService.class);
     }
 
-    //请求Marvel
-    public void requestMarvel() {
+    public static BiliBiliFragment newInstance() {
+        BiliBiliFragment fragment = new BiliBiliFragment();
+        return fragment;
+    }
 
-        Call<MarvelResponse> call = marvelService.getMarvel();
-        call.enqueue(new Callback<MarvelResponse>() {
+    public void requestRecommend() {
+
+        Call<TidRecommend> call = appBiliBiliService.getRecommed(1, 10, 1);
+        call.enqueue(new Callback<TidRecommend>() {
             @Override
-            public void onResponse(Response<MarvelResponse> response) {
-                if (response.body() != null) {
-//                    hitoText.setText(response.body().code + "  ----  ");
-//                sourceText.setText("----" + response.body().status);
-                }
+            public void onResponse(Response<TidRecommend> response) {
+                fragHitoText.setText(response.body().list.get(0).description);
+                fragHitoSource.setText("----" + response.body().list.size());
             }
 
             @Override
             public void onFailure(Throwable t) {
-//                Log.d("failure", t.getMessage());
             }
         });
 
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
     @Override
