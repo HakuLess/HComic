@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.less.haku.hcomic.common.BaseActivity;
 import com.less.haku.hcomic.data.Hitokoto;
 import com.less.haku.hcomic.network.HitokotoService;
-import com.less.haku.hcomic.network.base.RetrofitSigleton;
 import com.less.haku.hcomic.request.HitokotoRequest;
 import com.less.haku.hcomic.request.base.HOkHttpClient;
 import com.less.haku.hcomic.widget.ComicPage;
@@ -20,9 +19,6 @@ import com.less.haku.hcomic.widget.CustomView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
 
 public class MainActivity extends BaseActivity {
 
@@ -78,21 +74,21 @@ public class MainActivity extends BaseActivity {
 
     @OnClick({R.id.main_hito_text, R.id.fab})
     public void requestHitokotoByRetrofit() {
-        hitokotoService = RetrofitSigleton.getSingleton().create(HitokotoService.class);
-
-        Call<Hitokoto> call = hitokotoService.getHitokoto();
-        call.enqueue(new Callback<Hitokoto>() {
-            @Override
-            public void onResponse(Response<Hitokoto> response) {
-                hitoText.setText(response.body().hitokoto);
-                sourceText.setText("----" + response.body().source);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+//        hitokotoService = RetrofitSigleton.getSingleton().create(HitokotoService.class);
+//
+//        Call<Hitokoto> call = hitokotoService.getHitokoto();
+//        call.enqueue(new Callback<Hitokoto>() {
+//            @Override
+//            public void onResponse(Response<Hitokoto> response) {
+//                hitoText.setText(response.body().hitokoto);
+//                sourceText.setText("----" + response.body().source);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//        });
 
     }
 

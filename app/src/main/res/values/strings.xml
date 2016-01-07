@@ -1,4 +1,8 @@
 <resources>
+    <!--APP名称-->
     <string name="app_name">HComic</string>
     <string name="action_settings">Settings</string>
+    <!--splash页显示剩余n秒-->
+    <string name="splash_time">剩余%1$ds</string>
+    <!---->
 </resources>

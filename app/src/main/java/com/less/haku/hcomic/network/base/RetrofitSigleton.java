@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
+import retrofit.RxJavaCallAdapterFactory;
 
 /**
  * Created by HaKu on 15/12/31.
@@ -33,6 +34,7 @@ public class RetrofitSigleton {
                     retrofit = new Retrofit.Builder()
                             .baseUrl("http://api.hitokoto.us")
                             .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                             .build();
                 }
             }

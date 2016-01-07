@@ -2,6 +2,7 @@ package com.less.haku.hcomic.core.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,15 @@ import com.less.haku.hcomic.data.Hitokoto;
 import com.less.haku.hcomic.network.HitokotoService;
 import com.less.haku.hcomic.network.base.RetrofitSigleton;
 
+import java.util.concurrent.TimeUnit;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
+import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 
 /**
  * Created by HaKu on 15/12/30.
@@ -49,8 +54,12 @@ public class HitoKotoFragment extends BaseFragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.fragment_hitokoto, container, false);
             ButterKnife.bind(this, rootView);
+
+            //开始请求
+            startRequest();
+
             //请求一言API
-            requestHitokotoByRetrofit();
+//            requestHitokotoByRetrofit();
         }
 
         //缓存的rootView需要判断是否已经被加过parent， 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
@@ -68,22 +77,80 @@ public class HitoKotoFragment extends BaseFragment {
         hitokotoService = RetrofitSigleton.getSingleton().create(HitokotoService.class);
     }
 
+    public void startRequest() {
+        Subscription subscription = Observable.interval(5, TimeUnit.SECONDS)
+                .flatMap(new Func1<Long, Observable<Hitokoto>>() {
+                    @Override
+                    public Observable<Hitokoto> call(Long aLong) {
+                        Log.d("hitoRequest times", aLong.toString());
+                        return hitokotoService.getHitoKotoRx();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Hitokoto>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("rxjava error", e.getCause().toString());
+                    }
+
+                    @Override
+                    public void onNext(Hitokoto hitokoto) {
+                        hitoText.setText(hitokoto.hitokoto);
+                        sourceText.setText("----" + hitokoto.source);
+                    }
+                });
+//                .subscribe(new Action1<Long>() {
+//                    @Override
+//                    public void call(Long aLong) {
+//                        //aLong代表interval调用次数
+//                        Log.d("test leak", aLong + "");
+//                        requestHitokotoByRetrofit();
+//                    }
+//                });
+
+        compositeSubscription.add(subscription);
+    }
+
     //请求一言
     public void requestHitokotoByRetrofit() {
 
-        Call<Hitokoto> call = hitokotoService.getHitokoto();
-        call.enqueue(new Callback<Hitokoto>() {
-            @Override
-            public void onResponse(Response<Hitokoto> response) {
-                hitoText.setText(response.body().hitokoto);
-                sourceText.setText("----" + response.body().source);
-            }
+        hitokotoService.getHitoKotoRx()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Hitokoto>() {
+                    @Override
+                    public void onCompleted() {
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("rxjava error", "hitokotoService");
+                    }
 
+                    @Override
+                    public void onNext(Hitokoto hitokoto) {
+                        hitoText.setText(hitokoto.hitokoto);
+                        sourceText.setText("----" + hitokoto.source);
+                    }
+                });
+
+
+//        Call<Hitokoto> call = hitokotoService.getHitokoto();
+//        call.enqueue(new Callback<Hitokoto>() {
+//            @Override
+//            public void onResponse(Response<Hitokoto> response) {
+//                hitoText.setText(response.body().hitokoto);
+//                sourceText.setText("----" + response.body().source);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//            }
+//        });
     }
 
     @Override
