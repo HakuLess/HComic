@@ -9,10 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.less.haku.hcomic.common.BaseActivity;
-import com.less.haku.hcomic.data.Hitokoto;
 import com.less.haku.hcomic.network.HitokotoService;
-import com.less.haku.hcomic.request.HitokotoRequest;
-import com.less.haku.hcomic.request.base.HOkHttpClient;
 import com.less.haku.hcomic.widget.ComicPage;
 import com.less.haku.hcomic.widget.CustomView;
 
@@ -97,26 +94,26 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    public void requestHitokoto() {
-
-        final HitokotoRequest hitokotoRequest = new HitokotoRequest();
-
-//        showProgressDialog("加载中");
-        sendJsonRequest(hitokotoRequest, new HOkHttpClient.IRequestListener<Hitokoto>() {
-            @Override
-            public void onSucceed(Hitokoto response) {
-//                dismissDialog();
-                if (response == null) {
-                    return;
-                }
-                hitoText.setText(response.hitokoto);
-                sourceText.setText("----" + response.source);
-            }
-
-            @Override
-            public void onFailed(int errCode, String errMsg) {
-//                dismissDialog();
-            }
-        });
-    }
+//    public void requestHitokoto() {
+//
+//        final HitokotoRequest hitokotoRequest = new HitokotoRequest();
+//
+////        showProgressDialog("加载中");
+//        sendJsonRequest(hitokotoRequest, new HOkHttpClient.IRequestListener<Hitokoto>() {
+//            @Override
+//            public void onSucceed(Hitokoto response) {
+////                dismissDialog();
+//                if (response == null) {
+//                    return;
+//                }
+//                hitoText.setText(response.hitokoto);
+//                sourceText.setText("----" + response.source);
+//            }
+//
+//            @Override
+//            public void onFailed(int errCode, String errMsg) {
+////                dismissDialog();
+//            }
+//        });
+//    }
 }

@@ -18,7 +18,6 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by HaKu on 16/1/6.
@@ -40,9 +39,9 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        compositeSubscription = new CompositeSubscription();
+//        compositeSubscription = new CompositeSubscription();
 
-        showTime = 20L;   //总等待时间，使用大写L，便于与数字1区分
+        showTime = 3L;   //总等待时间，使用大写L，便于与数字1区分
         //初始化UI
         init();
         //进入APP倒计时
@@ -104,5 +103,6 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+//        ButterKnife.unbind(this);
     }
 }

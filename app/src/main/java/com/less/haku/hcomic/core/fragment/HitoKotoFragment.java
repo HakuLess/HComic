@@ -34,6 +34,7 @@ public class HitoKotoFragment extends BaseFragment {
     TextView hitoText;
     @Bind(R.id.frag_hito_source)
     TextView sourceText;
+
     private HitokotoService hitokotoService;
 
     public static HitoKotoFragment newInstance() {
@@ -55,9 +56,6 @@ public class HitoKotoFragment extends BaseFragment {
             rootView = inflater.inflate(R.layout.fragment_hitokoto, container, false);
             ButterKnife.bind(this, rootView);
 
-            //开始请求
-            startRequest();
-
             //请求一言API
 //            requestHitokotoByRetrofit();
         }
@@ -69,6 +67,10 @@ public class HitoKotoFragment extends BaseFragment {
         }
 
         ButterKnife.bind(this, rootView);
+
+        //开始请求
+        startRequest();
+
         return rootView;
     }
 
@@ -77,6 +79,9 @@ public class HitoKotoFragment extends BaseFragment {
         hitokotoService = RetrofitSigleton.getSingleton().create(HitokotoService.class);
     }
 
+    /**
+     * 使用RxJava调用一言请求，并刷新UI
+     */
     public void startRequest() {
         Subscription subscription = Observable.interval(5, TimeUnit.SECONDS)
                 .flatMap(new Func1<Long, Observable<Hitokoto>>() {
@@ -104,14 +109,6 @@ public class HitoKotoFragment extends BaseFragment {
                         sourceText.setText("----" + hitokoto.source);
                     }
                 });
-//                .subscribe(new Action1<Long>() {
-//                    @Override
-//                    public void call(Long aLong) {
-//                        //aLong代表interval调用次数
-//                        Log.d("test leak", aLong + "");
-//                        requestHitokotoByRetrofit();
-//                    }
-//                });
 
         compositeSubscription.add(subscription);
     }

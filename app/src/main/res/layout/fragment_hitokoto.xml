@@ -17,4 +17,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         tools:text="--hitokoto source" />
+
 </LinearLayout>

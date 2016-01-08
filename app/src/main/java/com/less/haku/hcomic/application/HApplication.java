@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by HaKu on 15/12/22.
@@ -28,6 +29,8 @@ public class HApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d("init", "初始化应用");
+
         Fresco.initialize(this);
+        LeakCanary.install(this);
     }
 }
