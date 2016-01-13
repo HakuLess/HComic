@@ -58,6 +58,9 @@ public class HitoKotoFragment extends BaseFragment {
 
             //请求一言API
 //            requestHitokotoByRetrofit();
+
+            //开始请求
+            startRequest();
         }
 
         //缓存的rootView需要判断是否已经被加过parent， 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
@@ -67,9 +70,6 @@ public class HitoKotoFragment extends BaseFragment {
         }
 
         ButterKnife.bind(this, rootView);
-
-        //开始请求
-        startRequest();
 
         return rootView;
     }

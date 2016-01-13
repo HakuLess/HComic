@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by HaKu on 15/12/30.
+ * 项目首页
  */
 public class HomeActivity extends BaseActivity {
     @Bind(R.id.home_tabLayout)
@@ -44,7 +45,13 @@ public class HomeActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
+    }
 
+    /**
+     * 使用带有图片的标签页
+     * 使用MD风格，暂不使用
+     * */
+    public void initTabWithImage() {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

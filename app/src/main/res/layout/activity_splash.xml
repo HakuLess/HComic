@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/splash_time"
         android:layout_marginTop="20dp"
@@ -14,9 +15,21 @@
         android:textColor="@color/BLACK"
         android:background="@color/GRAY"
         tools:text="剩余2s"/>
+
     <ImageView
         android:id="@+id/splash_icon"
+        android:scaleType="centerInside"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/splash_default"/>
+
+    <TextView
+        android:id="@+id/splash_debug_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:background="@color/gray"
+        android:textColor="@color/black"
+        tools:text="debug info"/>
 </RelativeLayout>
