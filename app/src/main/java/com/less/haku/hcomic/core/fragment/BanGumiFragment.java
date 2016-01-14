@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +15,6 @@ import com.less.haku.hcomic.R;
 import com.less.haku.hcomic.common.BaseFragment;
 import com.less.haku.hcomic.core.adapter.BangumiAdapter;
 import com.less.haku.hcomic.data.Bangumi;
-import com.less.haku.hcomic.data.BangumiIndex;
-import com.less.haku.hcomic.data.Result;
 import com.less.haku.hcomic.network.BangumiService;
 import com.less.haku.hcomic.network.base.RetrofitSigleton;
 
@@ -26,10 +23,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by HaKu on 15/12/31.
@@ -51,11 +47,6 @@ public class BanGumiFragment extends BaseFragment {
     private BangumiService bangumiAppService;
     private BangumiService bangumiService;
     private BangumiAdapter bangumiAdapter;
-
-    public static BanGumiFragment newInstance() {
-        BanGumiFragment fragment = new BanGumiFragment();
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,7 +89,7 @@ public class BanGumiFragment extends BaseFragment {
 
         ButterKnife.bind(this, rootView);
         //TODO 测试请求新番首页
-        requestIndex();
+//        requestIndex();
         return rootView;
     }
 
@@ -115,47 +106,67 @@ public class BanGumiFragment extends BaseFragment {
         requestBangumiByRetrofit(year, month);
     }
 
-    public void requestIndex() {
-        bangumiAppService.getIndexRx()
-                .subscribe(new Subscriber<Result<BangumiIndex>>() {
+//    public void requestIndex() {
+//        bangumiAppService.getIndexRx()
+//                .subscribe(new Subscriber<Result<BangumiIndex>>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        Log.e("aaaaaaaa", "bbbbbbbbbbb");
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.e("aaaaaaaa", e.getCause().toString());
+//                    }
+//
+//                    @Override
+//                    public void onNext(Result<BangumiIndex> bangumiIndexResult) {
+//                        Log.e("aaaaaaaa", bangumiIndexResult.code + "" +
+//                                bangumiIndexResult.result.recommendCategory.get(0).cover);
+//                    }
+//                });
+//
+//    }
+
+    //请求新番
+    public void requestBangumiByRetrofit(String year, String month) {
+        bangumiService.getBangumiRx(year, month)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<Bangumi>>() {
                     @Override
                     public void onCompleted() {
-                        Log.e("aaaaaaaa", "bbbbbbbbbbb");
+                        banRefresh.setRefreshing(false);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("aaaaaaaa", e.getCause().toString());
+                        banRefresh.setRefreshing(false);
                     }
 
                     @Override
-                    public void onNext(Result<BangumiIndex> bangumiIndexResult) {
-                        Log.e("aaaaaaaa", bangumiIndexResult.code + "" +
-                                bangumiIndexResult.result.recommendCategory.get(0).cover);
+                    public void onNext(List<Bangumi> bangumis) {
+                        bangumiAdapter.setBangumiList(bangumis);
+                        bangumiAdapter.notifyDataSetChanged();
+                        banReyclerView.scrollToPosition(0);
                     }
                 });
 
-    }
-
-    //请求新番
-    public void requestBangumiByRetrofit(String year, String month) {
-//        bangumiService = RetrofitSigleton.getBiliBili().create(BangumiService.class);
-
-        Call<List<Bangumi>> call = bangumiService.getBangumi(year, month);
-        call.enqueue(new Callback<List<Bangumi>>() {
-            @Override
-            public void onResponse(Response<List<Bangumi>> response) {
-                bangumiAdapter.setBangumiList(response.body());
-                bangumiAdapter.notifyDataSetChanged();
-                banReyclerView.scrollToPosition(0);
-                banRefresh.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                banRefresh.setRefreshing(false);
-            }
-        });
+//        Call<List<Bangumi>> call = bangumiService.getBangumi(year, month);
+//        call.enqueue(new Callback<List<Bangumi>>() {
+//            @Override
+//            public void onResponse(Response<List<Bangumi>> response) {
+//                bangumiAdapter.setBangumiList(response.body());
+//                bangumiAdapter.notifyDataSetChanged();
+//                banReyclerView.scrollToPosition(0);
+//                banRefresh.setRefreshing(false);
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                banRefresh.setRefreshing(false);
+//            }
+//        });
     }
 
     @Override

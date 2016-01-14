@@ -26,11 +26,11 @@ public class HomeFragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0 :
-                return HitoKotoFragment.newInstance();
+                return new HitoKotoFragment();
             case 1 :
-                return BanGumiFragment.newInstance();
+                return new BanGumiFragment();
             case 2 :
-                return BiliBiliFragment.newInstance();
+                return new BiliBiliFragment();
         }
         return null;
     }

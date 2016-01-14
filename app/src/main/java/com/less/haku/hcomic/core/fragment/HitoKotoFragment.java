@@ -37,11 +37,6 @@ public class HitoKotoFragment extends BaseFragment {
 
     private HitokotoService hitokotoService;
 
-    public static HitoKotoFragment newInstance() {
-        HitoKotoFragment fragment = new HitoKotoFragment();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

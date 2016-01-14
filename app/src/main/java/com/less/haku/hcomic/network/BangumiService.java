@@ -19,6 +19,9 @@ public interface BangumiService {
     @GET("/index/bangumi/{year}-{month}.json")
     Call<List<Bangumi>> getBangumi(@Path("year") String year, @Path("month") String month);
 
+    @GET("/index/bangumi/{year}-{month}.json")
+    Observable<List<Bangumi>> getBangumiRx(@Path("year") String year, @Path("month") String month);
+
 //    @GET("app_index_page")
 //    Call<List<RecommendCategory>> getIndex();
 

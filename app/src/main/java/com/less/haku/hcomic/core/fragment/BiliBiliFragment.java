@@ -64,11 +64,6 @@ public class BiliBiliFragment extends BaseFragment {
         appBiliBiliService = RetrofitSigleton.getAppBiliBili().create(AppBiliBiliService.class);
     }
 
-    public static BiliBiliFragment newInstance() {
-        BiliBiliFragment fragment = new BiliBiliFragment();
-        return fragment;
-    }
-
     public void requestRecommend() {
 
         Call<TidRecommend> call = appBiliBiliService.getRecommed(1, 10, 1);

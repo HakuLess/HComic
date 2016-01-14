@@ -53,6 +53,7 @@ public class RetrofitSigleton {
                     appBilibiliRetrofit = new Retrofit.Builder()
                             .baseUrl("http://app.bilibili.com/")
                             .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                             .build();
                 }
             }
@@ -70,6 +71,7 @@ public class RetrofitSigleton {
                     bilibiliRetrofit = new Retrofit.Builder()
                             .baseUrl("http://www.bilibili.com")
                             .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                             .build();
                 }
             }
