@@ -16,12 +16,12 @@ import java.util.List;
  * Created by HaKu on 15/12/31.
  * 新番fragment页RecyclerViewaAdapter
  */
-public class BangumiAdapter extends RecyclerView.Adapter {
+public class BangumiSearchAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<Bangumi> bangumiList;
 
     //构造函数中初始化list
-    public BangumiAdapter(Context context) {
+    public BangumiSearchAdapter(Context context) {
         this.context = context;
     }
 

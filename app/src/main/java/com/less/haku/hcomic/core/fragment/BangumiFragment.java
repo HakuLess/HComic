@@ -22,7 +22,7 @@ import retrofit.Response;
 /**
  * Created by HaKu on 16/1/5.
  */
-public class BiliBiliFragment extends BaseFragment {
+public class BangumiFragment extends BaseFragment {
 
     @Bind(R.id.frag_hito_text)
     TextView fragHitoText;

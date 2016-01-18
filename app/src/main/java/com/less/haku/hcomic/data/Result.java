@@ -9,4 +9,5 @@ public class Result<T> {
     public int code;
     public String message;
     public T result;
+    public T data;
 }

@@ -13,7 +13,7 @@ import android.widget.Spinner;
 
 import com.less.haku.hcomic.R;
 import com.less.haku.hcomic.common.BaseFragment;
-import com.less.haku.hcomic.core.adapter.BangumiAdapter;
+import com.less.haku.hcomic.core.adapter.BangumiSearchAdapter;
 import com.less.haku.hcomic.data.Bangumi;
 import com.less.haku.hcomic.network.BangumiService;
 import com.less.haku.hcomic.network.base.RetrofitSigleton;
@@ -31,7 +31,7 @@ import rx.schedulers.Schedulers;
  * Created by HaKu on 15/12/31.
  * 新番Fragment
  */
-public class BanGumiFragment extends BaseFragment {
+public class BanGumiSearchFragment extends BaseFragment {
 
     @Bind(R.id.frag_ban_list)
     RecyclerView banReyclerView;
@@ -46,7 +46,7 @@ public class BanGumiFragment extends BaseFragment {
 
     private BangumiService bangumiAppService;
     private BangumiService bangumiService;
-    private BangumiAdapter bangumiAdapter;
+    private BangumiSearchAdapter bangumiAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class BanGumiFragment extends BaseFragment {
     private View rootView;
 
     private String month = "1";
-    private String year = "2016";
+    private String year = "2013";
 
     @Nullable
     @Override
@@ -65,7 +65,7 @@ public class BanGumiFragment extends BaseFragment {
             rootView = inflater.inflate(R.layout.fragment_bangumi, container, false);
             ButterKnife.bind(this, rootView);
 
-            bangumiAdapter = new BangumiAdapter(this.getContext());
+            bangumiAdapter = new BangumiSearchAdapter(this.getContext());
             banReyclerView.setAdapter(bangumiAdapter);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

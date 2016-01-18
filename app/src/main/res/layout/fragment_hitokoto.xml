@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/frag_hito_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="hitokoto text" />
+        <TextView
+            android:id="@+id/frag_hito_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="hitokoto text" />
 
-    <TextView
-        android:id="@+id/frag_hito_source"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        tools:text="--hitokoto source" />
+        <TextView
+            android:id="@+id/frag_hito_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            tools:text="--hitokoto source" />
 
-</LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

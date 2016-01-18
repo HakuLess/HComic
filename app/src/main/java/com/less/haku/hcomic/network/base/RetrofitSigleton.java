@@ -98,7 +98,23 @@ public class RetrofitSigleton {
         return bangumiRetrofit;
     }
 
-
+    private volatile static Retrofit liveBilibiliRetrofit;
+    //返回B站API
+    public static Retrofit getLiveBilibiliRetrofit() {
+        if (liveBilibiliRetrofit == null) {
+            synchronized (Retrofit.class) {
+                if (liveBilibiliRetrofit == null) {
+                    liveBilibiliRetrofit = new Retrofit.Builder()
+                            .baseUrl("http://live.bilibili.com/")
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .build();
+                }
+            }
+        }
+        liveBilibiliRetrofit.client().interceptors().add(new LoggingInterceptor());
+        return liveBilibiliRetrofit;
+    }
 
 
     static class LoggingInterceptor implements Interceptor {

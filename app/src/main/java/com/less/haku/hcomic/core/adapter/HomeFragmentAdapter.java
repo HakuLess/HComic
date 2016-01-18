@@ -5,17 +5,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.less.haku.hcomic.core.fragment.BanGumiFragment;
-import com.less.haku.hcomic.core.fragment.BiliBiliFragment;
+import com.less.haku.hcomic.core.fragment.BanGumiSearchFragment;
+import com.less.haku.hcomic.core.fragment.BangumiFragment;
 import com.less.haku.hcomic.core.fragment.HitoKotoFragment;
+import com.less.haku.hcomic.core.fragment.LiveFragment;
 
 /**
  * Created by HaKu on 15/12/30.
  * 首页PagerAdapter
  */
 public class HomeFragmentAdapter extends FragmentPagerAdapter {
-    public final int COUNT = 3;
-    private String[] titles = new String[]{"HitoKoto", "新番", "useless"};
+    private String[] titles = new String[]{"HitoKoto", "新番", "useless", "直播"};
     private Context context;
     public HomeFragmentAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -28,16 +28,18 @@ public class HomeFragmentAdapter extends FragmentPagerAdapter {
             case 0 :
                 return new HitoKotoFragment();
             case 1 :
-                return new BanGumiFragment();
+                return new BanGumiSearchFragment();
             case 2 :
-                return new BiliBiliFragment();
+                return new BangumiFragment();
+            case 3 :
+                return new LiveFragment();
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return COUNT;
+        return titles.length;
     }
 
     @Override
