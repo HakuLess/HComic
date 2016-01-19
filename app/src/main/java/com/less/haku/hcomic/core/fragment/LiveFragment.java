@@ -102,7 +102,7 @@ public class LiveFragment extends BaseFragment {
     }
 
     public void liveRequest() {
-        API.getLiveIndex()
+        API.getLiveIndex(liveService)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<LiveIndex>() {

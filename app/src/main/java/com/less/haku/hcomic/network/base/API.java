@@ -15,10 +15,10 @@ import rx.functions.Func1;
  */
 public class API {
 
-    public static Observable<LiveIndex> getLiveIndex() {
+    public static Observable<LiveIndex> getLiveIndex(LiveBilibiliService bilibiliService) {
 
-        return RetrofitSigleton.getLiveBilibiliRetrofit().create(LiveBilibiliService.class)
-                .getIndexRx().flatMap(new Func1<Result<LiveIndex>, Observable<LiveIndex>>() {
+        return bilibiliService.getIndexRx()
+                .flatMap(new Func1<Result<LiveIndex>, Observable<LiveIndex>>() {
                     @Override
                     public Observable<LiveIndex> call(Result<LiveIndex> liveIndexResult) {
                         if (liveIndexResult.code != 0) {

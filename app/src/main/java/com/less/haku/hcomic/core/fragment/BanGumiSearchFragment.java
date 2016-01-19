@@ -88,7 +88,6 @@ public class BanGumiSearchFragment extends BaseFragment {
         }
 
         ButterKnife.bind(this, rootView);
-        //TODO 测试请求新番首页
 //        requestIndex();
         return rootView;
     }

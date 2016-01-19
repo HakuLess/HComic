@@ -11,17 +11,19 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by HaKu on 16/1/18.
- * 直播间快速入口
+ * Created by HaKu on 16/1/19.
+ * 直播间Item
  */
-public class LiveEntranceViewHolder extends RecyclerView.ViewHolder {
+public class LiveItemViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(R.id.live_entrance_title)
-    public TextView title;
-    @Bind(R.id.live_entrance_image)
-    public HImageView image;
+    @Bind(R.id.item_live_cover)
+    public HImageView itemLiveCover;
+    @Bind(R.id.item_live_user)
+    public TextView itemLiveUser;
+    @Bind(R.id.item_live_title)
+    public TextView itemLiveTitle;
 
-    public LiveEntranceViewHolder(View itemView) {
+    public LiveItemViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
