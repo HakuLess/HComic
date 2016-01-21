@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.less.haku.hcomic.R;
+import com.less.haku.hcomic.core.holder.LiveBannerViewHolder;
 import com.less.haku.hcomic.core.holder.LiveEntranceViewHolder;
 import com.less.haku.hcomic.core.holder.LiveItemViewHolder;
 import com.less.haku.hcomic.core.holder.LivePartitionViewHolder;
+import com.less.haku.hcomic.data.Banner;
 import com.less.haku.hcomic.data.Live;
 import com.less.haku.hcomic.data.LiveIndex;
 import com.less.haku.hcomic.data.PartitionSub;
@@ -27,10 +29,12 @@ public class LiveFragmentAdapter extends RecyclerView.Adapter {
 
     private int entranceSize;
     private int partitionSize;
+    private List<Banner> banner;
 
     private static final int TYPE_ENTRANCE = 0;     //快速入口
     private static final int TYPE_LIVE_ITEM = 1;    //直播Item
     private static final int TYPE_PARTITION = 2;    //分类Title
+    private static final int TYPE_BANNER = 3;       //直播页Banner
 
     public LiveFragmentAdapter(Context context) {
         this.context = context;
@@ -43,6 +47,10 @@ public class LiveFragmentAdapter extends RecyclerView.Adapter {
         this.liveIndex = data;
         entranceSize = data.entranceIcons.size();
         partitionSize = data.partitions.size();
+
+        banner = new ArrayList<>();
+        banner.clear();
+        banner = data.banner;
 
         liveSizes.clear();
         tempSize = 0;
@@ -62,6 +70,8 @@ public class LiveFragmentAdapter extends RecyclerView.Adapter {
                 return 6;
             case TYPE_PARTITION:
                 return 12;
+            case TYPE_BANNER:
+                return 12;
         }
         return 0;
     }
@@ -79,6 +89,9 @@ public class LiveFragmentAdapter extends RecyclerView.Adapter {
             case TYPE_PARTITION:
                 view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_live_partition_title, null);
                 return new LivePartitionViewHolder(view);
+            case TYPE_BANNER:
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_live_banner, null);
+                return new LiveBannerViewHolder(view);
         }
         return null;
     }
@@ -87,6 +100,7 @@ public class LiveFragmentAdapter extends RecyclerView.Adapter {
     private Live item;
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        position -= 1;
         if (holder instanceof LiveEntranceViewHolder) {
             ((LiveEntranceViewHolder) holder).title.setText(liveIndex.entranceIcons.get(position).name);
             ((LiveEntranceViewHolder) holder).image.setUrl(liveIndex.entranceIcons.get(position).entrance_icon.src);
@@ -99,14 +113,18 @@ public class LiveFragmentAdapter extends RecyclerView.Adapter {
             partition = liveIndex.partitions.get(partitionCol(position)).partition;
             ((LivePartitionViewHolder) holder).itemIcon.setUrl(partition.sub_icon.src);
             ((LivePartitionViewHolder) holder).itemTitle.setText(partition.name);
-            ((LivePartitionViewHolder) holder).itemCount.setText("当前" + partition.count + "个直播");
+            ((LivePartitionViewHolder) holder).itemCount.setText("当前" + partition.count + "啊个直播");
+        } else if (holder instanceof LiveBannerViewHolder) {
+            ((LiveBannerViewHolder) holder).banner
+                    .delayTime(5)
+                    .build(banner);
         }
     }
 
     @Override
     public int getItemCount() {
         if (liveIndex != null) {
-            return liveIndex.entranceIcons.size()
+            return 1 + liveIndex.entranceIcons.size()
                     + liveIndex.partitions.size() * 5;
 //                    + tempSize;
         } else {
@@ -116,6 +134,10 @@ public class LiveFragmentAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
+        if (position == 0) {
+            return TYPE_BANNER;
+        }
+        position -= 1;
         if (position < entranceSize) {
             return TYPE_ENTRANCE;
         } else if (ifPartitionTitle(position)) {

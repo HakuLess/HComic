@@ -46,7 +46,7 @@ public class HImageView extends SimpleDraweeView {
     }
 
     public void setUrl(String url) {
-        Log.d("image", "image Url " + url);
+        Log.d("Fresco image", "image Url " + url);
         this.setImageURI(Uri.parse(url));
     }
 }
@@ -73,6 +73,8 @@ public class HImageView extends SimpleDraweeView {
 //     * */
 //    public void setUrl(String url) {
 //        Glide.with(HApplication.instance()).load(url).into(this);
+//        Log.d("Glide image", "image Url " + url);
 ////        Picasso.with(HApplication.instance()).load(url).into(this);
+////        Log.d("Fresco image", "image Url " + url);
 //    }
 //}

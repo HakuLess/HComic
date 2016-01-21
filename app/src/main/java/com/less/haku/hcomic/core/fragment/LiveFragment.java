@@ -124,25 +124,5 @@ public class LiveFragment extends BaseFragment {
                         liveRecyclerView.scrollToPosition(0);
                     }
                 });
-//        liveService.getIndexRx()
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Subscriber<Result<LiveIndex>>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e("retrofit error", e.getCause().toString());
-//                    }
-//
-//                    @Override
-//                    public void onNext(Result<LiveIndex> liveIndexResult) {
-//                        Log.d("retrofit result", liveIndexResult.data.entranceIcons.size() + "");
-//                    }
-//                });
     }
-
-
 }
