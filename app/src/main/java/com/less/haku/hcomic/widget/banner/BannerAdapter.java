@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.less.haku.hcomic.widget.HImageView;
 
 import java.util.List;
@@ -37,6 +39,10 @@ public class BannerAdapter extends PagerAdapter {
             position = mList.size() + position;
         }
         HImageView v = mList.get(position);
+        GenericDraweeHierarchy hierarchy = v.getBuilder()
+                .setActualImageScaleType(ScalingUtils.ScaleType.FIT_CENTER)
+                .build();
+        v.setHierarchy(hierarchy);
 
         //如果View已经在之前添加到了一个父组件，则必须先remove，否则会抛出IllegalStateException。
         ViewParent vp = v.getParent();

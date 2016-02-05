@@ -7,12 +7,14 @@
 
     <com.less.haku.hcomic.widget.HImageView
         android:id="@+id/live_entrance_image"
+        android:layout_marginTop="3dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="30dp"
         android:layout_height="30dp" />
 
     <TextView
         android:id="@+id/live_entrance_title"
+        android:layout_marginBottom="3dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

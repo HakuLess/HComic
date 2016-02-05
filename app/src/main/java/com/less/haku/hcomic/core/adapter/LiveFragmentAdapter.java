@@ -109,11 +109,13 @@ public class LiveFragmentAdapter extends RecyclerView.Adapter {
             ((LiveItemViewHolder) holder).itemLiveCover.setUrl(item.cover.src);
             ((LiveItemViewHolder) holder).itemLiveTitle.setText(item.title);
             ((LiveItemViewHolder) holder).itemLiveUser.setText(item.owner.name);
+            ((LiveItemViewHolder) holder).itemLiveUserCover.avatar().setUrl(item.owner.face);
+            ((LiveItemViewHolder) holder).itemLiveCount.setText(item.online + "");
         } else if (holder instanceof LivePartitionViewHolder) {
             partition = liveIndex.partitions.get(partitionCol(position)).partition;
             ((LivePartitionViewHolder) holder).itemIcon.setUrl(partition.sub_icon.src);
             ((LivePartitionViewHolder) holder).itemTitle.setText(partition.name);
-            ((LivePartitionViewHolder) holder).itemCount.setText("当前" + partition.count + "啊个直播");
+            ((LivePartitionViewHolder) holder).itemCount.setText("当前" + partition.count + "个直播");
         } else if (holder instanceof LiveBannerViewHolder) {
             ((LiveBannerViewHolder) holder).banner
                     .delayTime(5)

@@ -23,6 +23,11 @@ public class LiveItemViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.item_live_title)
     public TextView itemLiveTitle;
 
+    @Bind(R.id.item_live_user_cover)
+    public HImageView itemLiveUserCover;
+    @Bind(R.id.item_live_count)
+    public TextView itemLiveCount;
+
     public LiveItemViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);

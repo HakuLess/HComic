@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
 
-    <com.less.haku.hcomic.widget.HImageView
-        android:id="@+id/item_live_partition_icon"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
+        <com.less.haku.hcomic.widget.HImageView
+            android:id="@+id/item_live_partition_icon"
+            android:layout_marginLeft="0dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
 
-    <TextView
-        android:id="@+id/item_live_partition_title"
-        android:layout_toRightOf="@+id/item_live_partition_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="直播分类名称"/>
+        <TextView
+            android:id="@+id/item_live_partition_title"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/item_live_partition_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="直播分类名称"/>
 
-    <TextView
-        android:id="@+id/item_live_partition_count"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="当前直播人数"/>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/item_live_partition_count"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="当前直播人数"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -70,6 +70,7 @@ public class Banner extends RelativeLayout {
         this.delayTime = time;
         return this;
     }
+
     /**
      * 图片轮播需要传入参数
      * */
