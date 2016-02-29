@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.less.haku.hcomic.R;
+import com.less.haku.hcomic.util.HUtils;
 import com.less.haku.hcomic.widget.HImageView;
 
 import java.util.ArrayList;
@@ -43,6 +44,9 @@ public class Banner extends RelativeLayout {
     private Context context;
     private List<com.less.haku.hcomic.data.Banner> bannerList;
 
+    private int selectRes = R.color.white;      //选中显示Indicator
+    private int unSelcetRes = R.color.black;    //非选中显示Indicator
+
     public Banner(Context context) {
         this(context, null);
     }
@@ -72,6 +76,16 @@ public class Banner extends RelativeLayout {
     }
 
     /**
+     * 设置Points资源 Res
+     * @param selectRes 选中状态
+     * @param unselcetRes 非选中状态
+     * */
+    public void setPointsRes(int selectRes, int unselcetRes) {
+        this.selectRes = selectRes;
+        this.unSelcetRes = unselcetRes;
+    }
+
+    /**
      * 图片轮播需要传入参数
      * */
     public void build(List<com.less.haku.hcomic.data.Banner> list) {
@@ -98,13 +112,17 @@ public class Banner extends RelativeLayout {
         //初始化与个数相同的指示器点
         for (int i = 0; i < pointSize; i++) {
             View dot = new View(context);
-            dot.setBackgroundResource(R.color.blue);
-            params = new LinearLayout.LayoutParams(100, 100);
+            dot.setBackgroundResource(unSelcetRes);
+            params = new LinearLayout.LayoutParams(
+                    HUtils.dip2px(context, 10),
+                    HUtils.dip2px(context, 10));
             params.leftMargin = 10;
             dot.setLayoutParams(params);
             dot.setEnabled(false);
             points.addView(dot);
         }
+
+        points.getChildAt(0).setBackgroundResource(selectRes);
 
         for (int i = 0; i < bannerList.size(); i++) {
             HImageView hImageView = new HImageView(context);
@@ -124,9 +142,9 @@ public class Banner extends RelativeLayout {
             public void onPageSelected(int pos) {
                 pos = pos % pointSize;
                 for (int i = 0; i < points.getChildCount(); i++) {
-                    points.getChildAt(i).setBackgroundResource(R.color.red);
+                    points.getChildAt(i).setBackgroundResource(unSelcetRes);
                 }
-                points.getChildAt(pos).setBackgroundResource(R.color.blue);
+                points.getChildAt(pos).setBackgroundResource(selectRes);
             }
 
             @Override
