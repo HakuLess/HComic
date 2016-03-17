@@ -2,6 +2,7 @@ package com.less.haku.hcomic.core.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.less.haku.hcomic.R;
@@ -27,6 +28,8 @@ public class LiveItemViewHolder extends RecyclerView.ViewHolder {
     public HImageView itemLiveUserCover;
     @Bind(R.id.item_live_count)
     public TextView itemLiveCount;
+    @Bind(R.id.item_live_layout)
+    public LinearLayout itemLiveLayout;
 
     public LiveItemViewHolder(View itemView) {
         super(itemView);
