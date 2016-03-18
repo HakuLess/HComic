@@ -9,13 +9,14 @@ import com.less.haku.hcomic.core.fragment.BanGumiSearchFragment;
 import com.less.haku.hcomic.core.fragment.BangumiFragment;
 import com.less.haku.hcomic.core.fragment.HitoKotoFragment;
 import com.less.haku.hcomic.core.fragment.LiveFragment;
+import com.less.haku.hcomic.core.fragment.RecoFragment;
 
 /**
  * Created by HaKu on 15/12/30.
  * 首页PagerAdapter
  */
 public class HomeFragmentAdapter extends FragmentPagerAdapter {
-    private String[] titles = new String[]{"HitoKoto", "新番", "useless", "直播"};
+    private String[] titles = new String[]{"HitoKoto", "新番", "useless", "直播", "推荐"};
     private Context context;
     public HomeFragmentAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -33,6 +34,8 @@ public class HomeFragmentAdapter extends FragmentPagerAdapter {
                 return new BangumiFragment();
             case 3 :
                 return new LiveFragment();
+            case 4 :
+                return new RecoFragment();
         }
         return null;
     }

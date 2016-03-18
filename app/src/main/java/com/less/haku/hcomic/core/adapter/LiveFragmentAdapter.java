@@ -99,10 +99,11 @@ public class LiveFragmentAdapter extends RecyclerView.Adapter {
     }
 
     private PartitionSub partition;
-    private Live item;
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         position -= 1;
+        final Live item;
         if (holder instanceof LiveEntranceViewHolder) {
             ((LiveEntranceViewHolder) holder).title.setText(liveIndex.entranceIcons.get(position).name);
             ((LiveEntranceViewHolder) holder).image.setUrl(liveIndex.entranceIcons.get(position).entrance_icon.src);
