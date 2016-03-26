@@ -1,7 +1,9 @@
 package com.less.haku.hcomic.network.base;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import com.less.haku.hcomic.application.HApplication;
 import com.less.haku.hcomic.data.LiveIndex;
 import com.less.haku.hcomic.data.RecoItem;
 import com.less.haku.hcomic.data.Result;
@@ -49,6 +51,7 @@ public class API {
                 });
     }
 }
+
 //                    @Override
 //                    public Observable<List<RecoItem>> call(Result<List<RecoItem>> liveIndexResult) {
 //                        if (liveIndexResult.code != 0) {
@@ -57,3 +60,14 @@ public class API {
 //                        }
 //                        return Observable.just(liveIndexResult.data);
 //                    }
+
+class HttpResultFunc<T> implements Func1<Result<T>, T>{
+
+    @Override
+    public T call(Result<T> httpResult) {
+        if (httpResult.code != 0) {
+            Toast.makeText(HApplication.instance(), httpResult.message, Toast.LENGTH_SHORT).show();
+        }
+        return httpResult.getData();
+    }
+}

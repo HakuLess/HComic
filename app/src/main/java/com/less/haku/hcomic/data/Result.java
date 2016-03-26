@@ -10,4 +10,12 @@ public class Result<T> {
     public String message;
     public T result;
     public T data;
+
+    public T getResult() {
+        return result;
+    }
+
+    public T getData() {
+        return result;
+    }
 }
