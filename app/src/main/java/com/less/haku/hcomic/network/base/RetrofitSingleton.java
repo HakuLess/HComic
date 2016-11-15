@@ -19,9 +19,9 @@ import retrofit.RxJavaCallAdapterFactory;
  * Retrofit单例
  */
 
-public class RetrofitSigleton {
+public class RetrofitSingleton {
     private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-    private RetrofitSigleton (){
+    private RetrofitSingleton(){
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
     }
 

@@ -11,7 +11,7 @@ import com.less.haku.hcomic.R;
 import com.less.haku.hcomic.common.BaseFragment;
 import com.less.haku.hcomic.data.TidRecommend;
 import com.less.haku.hcomic.network.AppBiliBiliService;
-import com.less.haku.hcomic.network.base.RetrofitSigleton;
+import com.less.haku.hcomic.network.base.RetrofitSingleton;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -61,7 +61,7 @@ public class BangumiFragment extends BaseFragment {
 
     @Override
     public void initServices() {
-        appBiliBiliService = RetrofitSigleton.getAppBiliBili().create(AppBiliBiliService.class);
+        appBiliBiliService = RetrofitSingleton.getAppBiliBili().create(AppBiliBiliService.class);
     }
 
     public void requestRecommend() {

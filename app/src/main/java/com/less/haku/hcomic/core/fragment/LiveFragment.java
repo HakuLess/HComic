@@ -17,7 +17,7 @@ import com.less.haku.hcomic.core.adapter.LiveFragmentAdapter;
 import com.less.haku.hcomic.data.LiveIndex;
 import com.less.haku.hcomic.network.LiveBilibiliService;
 import com.less.haku.hcomic.network.base.API;
-import com.less.haku.hcomic.network.base.RetrofitSigleton;
+import com.less.haku.hcomic.network.base.RetrofitSingleton;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -92,7 +92,7 @@ public class LiveFragment extends BaseFragment {
 
     @Override
     public void initServices() {
-        liveService = RetrofitSigleton.getLiveBilibiliRetrofit().create(LiveBilibiliService.class);
+        liveService = RetrofitSingleton.getLiveBilibiliRetrofit().create(LiveBilibiliService.class);
     }
 
     @Override

@@ -16,7 +16,7 @@ import com.less.haku.hcomic.common.BaseFragment;
 import com.less.haku.hcomic.core.adapter.BangumiSearchAdapter;
 import com.less.haku.hcomic.data.Bangumi;
 import com.less.haku.hcomic.network.BangumiService;
-import com.less.haku.hcomic.network.base.RetrofitSigleton;
+import com.less.haku.hcomic.network.base.RetrofitSingleton;
 
 import java.util.List;
 
@@ -94,8 +94,8 @@ public class BanGumiSearchFragment extends BaseFragment {
 
     @Override
     public void initServices() {
-        bangumiService = RetrofitSigleton.getBiliBili().create(BangumiService.class);
-        bangumiAppService = RetrofitSigleton.getBangumi().create(BangumiService.class);
+        bangumiService = RetrofitSingleton.getBiliBili().create(BangumiService.class);
+        bangumiAppService = RetrofitSingleton.getBangumi().create(BangumiService.class);
     }
 
     @OnClick(R.id.frag_ban_search)

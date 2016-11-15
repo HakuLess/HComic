@@ -18,7 +18,7 @@ import com.less.haku.hcomic.core.adapter.RecoFragmentAdapter;
 import com.less.haku.hcomic.data.RecoItem;
 import com.less.haku.hcomic.network.AppBiliBiliService;
 import com.less.haku.hcomic.network.base.API;
-import com.less.haku.hcomic.network.base.RetrofitSigleton;
+import com.less.haku.hcomic.network.base.RetrofitSingleton;
 
 import java.util.List;
 
@@ -93,7 +93,7 @@ public class RecoFragment extends BaseFragment {
 
     @Override
     public void initServices() {
-        appBiliBiliService = RetrofitSigleton.getAppBiliBili().create(AppBiliBiliService.class);
+        appBiliBiliService = RetrofitSingleton.getAppBiliBili().create(AppBiliBiliService.class);
     }
 
     @Override

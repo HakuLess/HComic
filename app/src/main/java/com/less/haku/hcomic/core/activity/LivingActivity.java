@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.less.haku.hcomic.R;
 import com.less.haku.hcomic.common.BaseActivity;
 import com.less.haku.hcomic.network.LiveBilibiliService;
-import com.less.haku.hcomic.network.base.RetrofitSigleton;
+import com.less.haku.hcomic.network.base.RetrofitSingleton;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -56,7 +56,7 @@ public class LivingActivity extends BaseActivity {
         holder = videoView.getHolder();
         ijkMediaPlayer = new IjkMediaPlayer();
 
-        liveService = RetrofitSigleton.getLiveBilibiliRetrofit().create(LiveBilibiliService.class);
+        liveService = RetrofitSingleton.getLiveBilibiliRetrofit().create(LiveBilibiliService.class);
 
         new Thread(new Runnable() {
             @Override

@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick({R.id.main_hito_text, R.id.fab})
     public void requestHitokotoByRetrofit() {
-//        hitokotoService = RetrofitSigleton.getSingleton().create(HitokotoService.class);
+//        hitokotoService = RetrofitSingleton.getSingleton().create(HitokotoService.class);
 //
 //        Call<Hitokoto> call = hitokotoService.getHitokoto();
 //        call.enqueue(new Callback<Hitokoto>() {

@@ -12,7 +12,7 @@ import com.less.haku.hcomic.R;
 import com.less.haku.hcomic.common.BaseFragment;
 import com.less.haku.hcomic.data.Hitokoto;
 import com.less.haku.hcomic.network.HitokotoService;
-import com.less.haku.hcomic.network.base.RetrofitSigleton;
+import com.less.haku.hcomic.network.base.RetrofitSingleton;
 
 import java.util.concurrent.TimeUnit;
 
@@ -71,7 +71,7 @@ public class HitoKotoFragment extends BaseFragment {
 
     @Override
     public void initServices() {
-        hitokotoService = RetrofitSigleton.getSingleton().create(HitokotoService.class);
+        hitokotoService = RetrofitSingleton.getSingleton().create(HitokotoService.class);
     }
 
     /**
