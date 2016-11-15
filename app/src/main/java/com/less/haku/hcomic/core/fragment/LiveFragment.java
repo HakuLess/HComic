@@ -29,7 +29,7 @@ import rx.schedulers.Schedulers;
  * Created by HaKu on 16/1/18.
  * BiliBili直播页面
  */
-public classLiveFragment extends BaseFragment {
+public class LiveFragment extends BaseFragment {
 
     @Bind(R.id.frag_live_recycler)
     RecyclerView liveRecyclerView;
